@@ -1,3 +1,32 @@
 @import "flatly/_variables";
 @import "bootstrap";
 @import "flatly/_bootswatch";
+
+.input-group {
+  margin-bottom: 20px;
+}
+
+.app-container {
+  margin-top: 60px;
+  padding: 20px;
+}
+
+.input-label {
+  width: 5em;
+}
+
+.search-result {
+  display: flex;
+}
+
+.search-result-main {
+  flex: 1 0 auto;
+}
+
+.search-result-sub {
+  flex: 0 0 90px;
+}
+
+.distance {
+
+}
