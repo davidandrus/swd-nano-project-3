@@ -1,4 +1,5 @@
 /* jshint node: true */
+const keys = require('../keys.json');
 
 module.exports = function(environment) {
   var ENV = {
@@ -6,6 +7,7 @@ module.exports = function(environment) {
     environment: environment,
     rootURL: '/',
     locationType: 'auto',
+    apiKeys: keys,
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
