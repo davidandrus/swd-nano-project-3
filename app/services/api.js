@@ -34,14 +34,41 @@ export default Ember.Service.extend({
       const request =  {
         location: pyrmont,
         radius: '500',
-        types: ['store']
+        types: ['restaurants'],
+        language: 'en',
       };
 
       return new Ember.RSVP.Promise((resolve, reject) => {
         const callback = (results, status) => {
           if (status === google.maps.places.PlacesServiceStatus.OK) {
-            console.log('resolved', results);
-            resolve(results);
+            const updatedResults = results.map(result => {
+              const record = new Ember.Object(result);
+              const photos = record.get('photos');
+              const firstPhoto = photos ? photos[0] : undefined;
+              const firstPhotoUrl = firstPhoto ?
+                firstPhoto.getUrl({
+                  maxWidth: 64,
+                  maxHeight: 64,
+                }) :
+                undefined;
+
+              console.log({firstPhoto}, record.get('photos'));
+
+              return {
+                name: record.get('name'),
+                open: record.get('opening_hours.open_now'),
+                vicinity: record.get('vicinity'),
+                place_id: record.get('place_id'),
+                types: record.get('types'),
+                rating: record.get('rating'),
+                photo: {
+                  src: firstPhotoUrl,
+                  attributions: firstPhoto ? firstPhoto.html_attributions : undefined,
+                }
+              };
+            });
+
+            resolve(updatedResults);
           } else {
             reject(status);
           }
