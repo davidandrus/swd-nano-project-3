@@ -1,0 +1,62 @@
+<div class="input-group">
+  <span class="input-group-addon">
+    <span class="glyphicon glyphicon-filter"></span>
+    <label for="keyword-input" class="input-label">Keyword</label>
+  </span>
+  <input id="keyword-input" type="text" class="form-control" placeholder="Chinese">
+</div>
+
+<div class="input-group">
+  <span class="input-group-addon">
+    <span class="glyphicon glyphicon-map-marker"></span>
+    <label id="location-label"  class="input-label">Location</label>
+  </span>
+  <input id="location-input" type="text" class="form-control" placeholder="City, State OR ZipCode">
+</div>
+
+<button class="btn btn-primary btn-right">Search For Restaurants</button>
+<!-- google static map location for address, link to website, phone number etc... -->
+<!-- https://developers.google.com/places/web-service/search -->
+<!-- https://developers.google.com/places/web-service/details -->
+<!-- https://developers.google.com/maps/documentation/javascript/reference#spherical -->
+<!-- can probably use radar search, and list views, start with list -->
+<!-- make sure to show attributions for photos -->
+<hr />
+<div class="media">
+  <div class="media-left">
+    <a href="#">
+      <img class="media-object" src="http://placehold.it/64x64" alt="...">
+    </a>
+  </div>
+  <div class="media-body">
+    <!-- search result -->
+    <div class="search-result">
+      <div class="search-result-main">
+        <h4 class="media-heading">Media heading <small>(open)</small></h4>
+        <div class="rating">
+          <span class="glyphicon glyphicon-star"></span>
+          <span class="glyphicon glyphicon-star"></span>
+          <span class="glyphicon glyphicon-star"></span>
+          <span class="glyphicon glyphicon-star"></span>
+          <span class="glyphicon glyphicon-star"></span>
+        </div>
+        <!-- make more semantic -->
+        <div class="address">48 Pirrama Rd, Pyrmont</div>
+        <div class="keywords">Chinese, fusion</div>
+      </div>
+      <div class="search-result-sub">
+        <div class="price">
+          <span class="glyphicon glyphicon-usd"></span>
+          <span class="glyphicon glyphicon-usd"></span>
+          <span class="glyphicon glyphicon-usd"></span>
+          <span class="glyphicon glyphicon-usd"></span>
+          <span class="glyphicon glyphicon-usd"></span>
+        </div>
+        <div class="text-right">2.1 mi</div>
+        <!-- https://developers.google.com/maps/documentation/javascript/reference#spherical -->
+      </div>
+    </div>
+  </div>
+</div>
+<hr />
+{{outlet}}
