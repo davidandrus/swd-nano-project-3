@@ -29,7 +29,7 @@
     <div class="media-left">
        <div class="search-result-image-wrapper">
         <a href="#">
-          {{#link-to "detail" restaurant.id}}
+          {{#link-to "detail" restaurant.place_id}}
             {{#if restaurant.photo.src}}
               <img class="media-object" src="{{restaurant.photo.src}}">
             {{else}}
@@ -44,7 +44,7 @@
       <div class="search-result-body">
         <div class="search-result-main">
           <h4 class="media-heading">
-            {{#link-to "detail" restaurant.id}}
+            {{#link-to "detail" restaurant.place_id}}
               {{restaurant.name}}
             {{/link-to}}
             <small>(

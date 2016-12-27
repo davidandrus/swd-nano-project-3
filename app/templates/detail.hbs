@@ -1,11 +1,9 @@
 <!-- detail page -->
-<h1>Restaurant name <small>(open)</small></h1>
+{{ log model }}
+<h1>{{model.name}} <small>(open)</small></h1>
 <div class="restaurant-location"></div>
 <h3>Address</h3>
-<div>
-  555 12th St. Suite 201<br />
-  Radville, WA 99999
-</div>
+{{{model.address}}}
 <div class="rating">
   <span class="glyphicon glyphicon-star"></span>
   <span class="glyphicon glyphicon-star"></span>
@@ -22,38 +20,33 @@
 </div>
 <h3>Contact</h3>
 <div>
-  <p>phone: <a href="">1-888-122-5555</a></p>
-  <p>website: <a href="http://rad.com">View Website</a></p>
+  <p>phone: <a href="tel:{{model.phone}}">{{model.phone}}</a></p>
+  <p>phone (international): <a href="tel:{{model.phone_intl}}">{{model.phone_intl}}</a></p>
+  <p>website: <a href="{{model.website}}">{{model.website}}</a></p>
 </div>
 <h3>Hours</h3>
 <div>
-  <p><b>Mon</b> 9:00am - 6:00PM</p>
-  <p><b>Mon</b> 9:00am - 6:00PM</p>
-  <p><b>Mon</b> 9:00am - 6:00PM</p>
-  <p><b>Mon</b> 9:00am - 6:00PM</p>
-  <p><b>Mon</b> 9:00am - 6:00PM</p>
-  <p><b>Mon</b> 9:00am - 6:00PM</p>
-  <p><b>Mon</b> 9:00am - 6:00PM</p>
+  {{#each model.schedule as |day| }}
+    <p>{{day}}</p>
+  {{/each}}
 </div>
 <h2>Photos</h2>
-<div>
-  <img src="http://placehold.it/100x100" alt="...">
-  <img src="http://placehold.it/100x100" alt="...">
-  <img src="http://placehold.it/100x100" alt="...">
-  <img src="http://placehold.it/100x100" alt="...">
-  <img src="http://placehold.it/100x100" alt="...">
-  <img src="http://placehold.it/100x100" alt="...">
+<div class="thumbnails">
+  {{#each model.photos as |photo| }}
+    <div class="thumb-wrapper">
+      <img src="{{photo.thumb}}" alt="" />
+    </div>
+  {{/each}}
 </div>
-<h2>Reviews</h2>
+<h2>Recent Reviews</h2>
 <div class="reviews">
+  {{#each model.reviews as |review| }}
   <div class="review media">
     <div class="media-left">
-      <a href="#">
-        <img class="media-object" src="http://placehold.it/64x64" alt="...">
-      </a>
+      <img class="media-object" src="{{review.avatar}}?sz=64" alt="{{review.author}}">
     </div>
     <div class="media-body">
-      <div>Cool Username - 12/12/2015</div>
+      <h2>{{review.author}} <small>{{review.date}}</small></h2>
       <div class="rating">
         <span class="glyphicon glyphicon-star"></span>
         <span class="glyphicon glyphicon-star"></span>
@@ -61,10 +54,11 @@
         <span class="glyphicon glyphicon-star"></span>
         <span class="glyphicon glyphicon-star"></span>
       </div>
-      <p>Review Review Review Review Review Review Review Review Review Review Review Review Review Review Review Review Review Review </p>
+      <p>{{review.review}}</p>
     </div>
   </div>
   <hr />
+  {{/each}}
   <button class="btn btn-primary">Leave a Review</button>
 </div>
 {{outlet}}

@@ -45,3 +45,18 @@
   height: 300px;
   width: 400px;
 }
+
+.thumbnails {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.thumb-wrapper {
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, .1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 120px;
+  margin: 0 10px 20px;
+  min-width: 120px;
+}

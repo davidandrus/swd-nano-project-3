@@ -13,6 +13,16 @@ const serviceReady = new Ember.RSVP.Promise((resolve, reject) => {
   serviceReject = reject;
 });
 
+const getCommonFields = (record) => ({
+  icon: record.get('icon'),
+  lat: record.get('geometry.location').lat(),
+  lng: record.get('geometry.location').lng(),
+  name: record.get('name'),
+  open: record.get('opening_hours.open_now'),
+  rating: record.get('rating'),
+  price_level: record.get('price_level'),
+});
+
 export default Ember.Service.extend({
   init() {
     this._super(...arguments);
@@ -26,7 +36,68 @@ export default Ember.Service.extend({
 
   service: null,
 
+  getPlaceDetails(id) {
+
+    return serviceReady.then(() => {
+
+      const request = {
+        placeId: id,
+      };
+
+      return new Ember.RSVP.Promise((resolve, reject) => {
+        const callback = (results, status) => {
+          if (status === google.maps.places.PlacesServiceStatus.OK) {
+            const record = new Ember.Object(results);
+
+
+            const updatedRecord = {
+              ...getCommonFields(record),
+              schedule: record.get('opening_hours.weekday_text'),
+              phone: record.get('formatted_phone_number'),
+              phone_intl: record.get('international_phone_number'),
+              photos: record.get('photos').map(item => {
+                const photo = new Ember.Object(item);
+
+                const thumbnailUrl = item.getUrl({
+                  maxHeight: 100,
+                  maxWidth: 100,
+                });
+
+                return {
+                  thumb: thumbnailUrl,
+                  attribution: photo.get('html_attributions'),
+                }
+              }),
+              reviews: record.get('reviews').map(item => {
+                const review = new Ember.Object(item);
+                return {
+                  author: review.get('author_name'),
+                  avatar: review.get('profile_photo_url'),
+                  rating: review.get('rating'),
+                  date: review.get('relative_time_description'),
+                  review: review.get('text') ,
+                }
+              }),
+              website: record.get('website'),
+              address: record.get('adr_address'),
+            };
+
+
+            resolve(JSON.parse(JSON.stringify(updatedRecord)));
+          } else {
+            reject(status);
+          }
+        };
+
+        console.log('making call');
+        this.get('service').getDetails(request, callback);
+      });
+
+    });
+  },
+
   makePlaceSearch() {
+    console.log('make place search called');
     return serviceReady.then(() => {
 
       var pyrmont = new google.maps.LatLng(-33.8665433,151.1956316);
@@ -53,14 +124,11 @@ export default Ember.Service.extend({
                 undefined;
 
               return {
-                name: record.get('name'),
-                id: record.get('id'),
-                open: record.get('opening_hours.open_now'),
+                ...getCommonFields(record),
+                place_id: record.get('place_id'),
                 vicinity: record.get('vicinity'),
                 place_id: record.get('place_id'),
                 types: record.get('types'),
-                rating: record.get('rating'),
-                price_level: record.get('price_level'),
                 photo: {
                   src: firstPhotoUrl,
                   attributions: firstPhoto ? firstPhoto.html_attributions : undefined,
