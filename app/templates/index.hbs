@@ -20,33 +20,43 @@
 <!-- https://developers.google.com/places/web-service/details -->
 <!-- https://developers.google.com/maps/documentation/javascript/reference#spherical -->
 <!-- can probably use radar search, and list views, start with list -->
-<!-- make sure to show attributions for photos -->
-{{log model}}
+<!-- make sure to show attributions for results -->
+
 
 <hr />
 {{#each model as |restaurant| }}
-  <div class="media">
+  <div class="media search-result">
     <div class="media-left">
-      <a href="#">
-        {{#if restaurant.photo.src}}
-          <img class="media-object" src="{{restaurant.photo.src}}">
-        {{else}}
-          <img class="media-object" src="http://placehold.it/64x64">
-        {{/if}}
-      </a>
+       <div class="search-result-image-wrapper">
+        <a href="#">
+          {{#link-to "detail" restaurant.id}}
+            {{#if restaurant.photo.src}}
+              <img class="media-object" src="{{restaurant.photo.src}}">
+            {{else}}
+              <img class="media-object" src="http://placehold.it/64x64">
+            {{/if}}
+          {{/link-to}}
+        </a>
+      </div>
     </div>
     <div class="media-body">
       <!-- search result -->
-      <div class="search-result">
+      <div class="search-result-body">
         <div class="search-result-main">
-          <h4 class="media-heading">{{restaurant.name}} <small>(
-            {{#if restaurant.open }}
-              open
-            {{else}}
-              closed
-            {{/if}}
-          )</small></h4>
-          {{#if rating}}
+          <h4 class="media-heading">
+            {{#link-to "detail" restaurant.id}}
+              {{restaurant.name}}
+            {{/link-to}}
+            <small>(
+              {{#if restaurant.open }}
+                open
+              {{else}}
+                closed
+              {{/if}}
+              )
+            </small>
+          </h4>
+          {{#if restaurant.rating}}
             <div class="rating">
               <span class="glyphicon glyphicon-star"></span>
               <span class="glyphicon glyphicon-star"></span>
@@ -55,7 +65,7 @@
               <span class="glyphicon glyphicon-star"></span>
             </div>
           {{else}}
-            UnRated
+            Not rated
           {{/if}}
           <!-- make more semantic -->
           <div class="address">{{restaurant.vicinity}}</div>
@@ -66,13 +76,17 @@
           </div> -->
         </div>
         <div class="search-result-sub">
-          <div class="price">
-            <span class="glyphicon glyphicon-usd"></span>
-            <span class="glyphicon glyphicon-usd"></span>
-            <span class="glyphicon glyphicon-usd"></span>
-            <span class="glyphicon glyphicon-usd"></span>
-            <span class="glyphicon glyphicon-usd"></span>
-          </div>
+          {{#if restaurant.price_level}}
+            <div class="price">
+              <span class="glyphicon glyphicon-usd"></span>
+              <span class="glyphicon glyphicon-usd"></span>
+              <span class="glyphicon glyphicon-usd"></span>
+              <span class="glyphicon glyphicon-usd"></span>
+              <span class="glyphicon glyphicon-usd"></span>
+            </div>
+          {{else}}
+            Price level not available
+          {{/if}}
           <div class="text-right">2.1 mi</div>
           <!-- https://developers.google.com/maps/documentation/javascript/reference#spherical -->
         </div>

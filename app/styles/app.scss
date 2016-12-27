@@ -15,7 +15,15 @@
   width: 5em;
 }
 
-.search-result {
+.search-result-image-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 74px;
+}
+
+.search-result-body {
   display: flex;
 }
 

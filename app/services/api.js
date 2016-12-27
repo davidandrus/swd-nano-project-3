@@ -52,15 +52,15 @@ export default Ember.Service.extend({
                 }) :
                 undefined;
 
-              console.log({firstPhoto}, record.get('photos'));
-
               return {
                 name: record.get('name'),
+                id: record.get('id'),
                 open: record.get('opening_hours.open_now'),
                 vicinity: record.get('vicinity'),
                 place_id: record.get('place_id'),
                 types: record.get('types'),
                 rating: record.get('rating'),
+                price_level: record.get('price_level'),
                 photo: {
                   src: firstPhotoUrl,
                   attributions: firstPhoto ? firstPhoto.html_attributions : undefined,
