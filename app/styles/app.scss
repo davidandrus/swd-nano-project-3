@@ -73,3 +73,38 @@
   right: 0;
   z-index: 2000;
 }
+
+.photos-overlay {
+  display: flex;
+  flex-direction: column;
+
+  .thumbs-container {
+    flex: 0 0 120px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .image-container {
+    display: flex;
+    flex: 1 0 auto;
+    justify-content: center;
+    align-items: center;
+
+    .main-image {
+      display: flex;
+      flex: 1 1 auto;
+      justify-content: center;
+    }
+
+    .image-nav {
+      color: white;
+      flex: 0 0 30px;
+      font-size: 30px;
+      padding: 10px;
+    }
+
+    img {
+      display: inline;
+    }
+  }
+}

@@ -1,8 +1,23 @@
 {{outlet}}
-<div class="overlay">
-  <h1>Photo</h1>
-  <img style="border: 1px solid red" src="{{model.photo.thumb}}" alt=""/>
-  {{thumbs-list
-    class="thumbnails"
-    thumbs=model.thumbs }}
+<div class="overlay photos-overlay">
+  <div class="image-container">
+    <div class="image-nav">
+      {{#link-to "detail.photos" model.prevIndex }}
+        <span class="glyphicon glyphicon-chevron-left"></span>
+      {{/link-to}}
+    </div>
+    <div class="main-image">
+      <img style="border: 1px solid red" src="{{model.photo.thumb}}" alt=""/>
+    </div>
+    <div class="image-nav">
+      {{#link-to "detail.photos" model.nextIndex }}
+        <span class="glyphicon glyphicon-chevron-right"></span>
+      {{/link-to}}
+    </div>
+  </div>
+  <div class="thumbs-container">
+    {{thumbs-list
+      class="thumbnails"
+      thumbs=model.thumbs }}
+  </div>
 </div>
