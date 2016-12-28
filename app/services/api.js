@@ -49,13 +49,15 @@ export default Ember.Service.extend({
           if (status === google.maps.places.PlacesServiceStatus.OK) {
             const record = new Ember.Object(results);
 
+            console.log('detail record', record);
+
 
             const updatedRecord = {
               ...getCommonFields(record),
               schedule: record.get('opening_hours.weekday_text'),
               phone: record.get('formatted_phone_number'),
               phone_intl: record.get('international_phone_number'),
-              photos: record.get('photos').map(item => {
+              photos: (record.get('photos') || []).map(item => {
                 const photo = new Ember.Object(item);
 
                 const thumbnailUrl = item.getUrl({
@@ -68,7 +70,7 @@ export default Ember.Service.extend({
                   attribution: photo.get('html_attributions'),
                 }
               }),
-              reviews: record.get('reviews').map(item => {
+              reviews: (record.get('reviews') || []).map(item => {
                 const review = new Ember.Object(item);
                 return {
                   author: review.get('author_name'),
@@ -105,7 +107,7 @@ export default Ember.Service.extend({
       const request =  {
         location: pyrmont,
         radius: '500',
-        types: ['restaurants'],
+        type: 'restaurant',
         language: 'en',
       };
 

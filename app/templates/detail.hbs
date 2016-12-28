@@ -1,7 +1,7 @@
 <!-- detail page -->
 {{ log model }}
 <h1>{{model.name}} <small>(open)</small></h1>
-<div class="restaurant-location"></div>
+<img src="https://maps.googleapis.com/maps/api/staticmap?center=Brooklyn+Bridge,New+York,NY&zoom=13&size=600x300&maptype=roadmap&markers=color:blue%7Clabel:S%7C40.702147,-74.015794&markers=color:green%7Clabel:G%7C40.711614,-74.012318&markers=color:red%7Clabel:C%7C40.718217,-73.998284&key=AIzaSyCBKFEXuIhChNRqDZKJj_Um8sLNYn44q-U" width="400" height="300">
 <h3>Address</h3>
 {{{model.address}}}
 <div class="rating">
@@ -31,11 +31,13 @@
   {{/each}}
 </div>
 <h2>Photos</h2>
+{{ log photos }}
 <div class="thumbnails">
-  {{#each model.photos as |photo| }}
-    <div class="thumb-wrapper">
+
+  {{#each model.photos as |photo index| }}
+    {{#link-to "detail.photos" index class="thumb-wrapper"}}
       <img src="{{photo.thumb}}" alt="" />
-    </div>
+    {{/link-to}}
   {{/each}}
 </div>
 <h2>Recent Reviews</h2>
