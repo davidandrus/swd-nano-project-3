@@ -35,22 +35,22 @@
   class="thumbnails"
   thumbs=model.photos }}
 {{outlet}}
-<h2>Recent Reviews</h2>
+<h2>Top Reviews</h2>
 <div class="reviews">
   {{#each model.reviews as |review| }}
   <div class="review media">
     <div class="media-left">
-      <img class="media-object" src="{{review.avatar}}?sz=64" alt="{{review.author}}">
+      {{#if review.avatar}}
+        <img class="media-object" src="{{review.avatar}}?sz=64" alt="{{review.author}}">
+      {{else}}
+        <span class="avatar-placeholder">
+          <span class="glyphicon glyphicon-user"></span>
+        </span>
+      {{/if}}
     </div>
     <div class="media-body">
-      <h2>{{review.author}} <small>{{review.date}}</small></h2>
-      <div class="rating">
-        <span class="glyphicon glyphicon-star"></span>
-        <span class="glyphicon glyphicon-star"></span>
-        <span class="glyphicon glyphicon-star"></span>
-        <span class="glyphicon glyphicon-star"></span>
-        <span class="glyphicon glyphicon-star"></span>
-      </div>
+      <h4>{{review.author}} <small>{{review.date}}</small></h4>
+      {{rating-static rating=review.rating}}
       <p>{{review.review}}</p>
     </div>
   </div>

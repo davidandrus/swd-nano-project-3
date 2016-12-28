@@ -31,7 +31,10 @@
             {{#if restaurant.photo.src}}
               <img class="media-object" src="{{restaurant.photo.src}}">
             {{else}}
-              <img class="media-object" src="http://placehold.it/64x64">
+              <span class="no-image-thumbnail">
+                <span class="glyphicon glyphicon-picture"></span>
+                <small class="message">No images</small>
+              </span>
             {{/if}}
           {{/link-to}}
         </a>
@@ -64,18 +67,8 @@
           </div> -->
         </div>
         <div class="search-result-sub">
-          {{#if restaurant.price_level}}
-            <div class="price">
-              <span class="glyphicon glyphicon-usd"></span>
-              <span class="glyphicon glyphicon-usd"></span>
-              <span class="glyphicon glyphicon-usd"></span>
-              <span class="glyphicon glyphicon-usd"></span>
-              <span class="glyphicon glyphicon-usd"></span>
-            </div>
-          {{else}}
-            Price level not available
-          {{/if}}
           <div class="text-right">{{restaurant.distance}}</div>
+          <div class="text-right">{{price-level price=restaurant.price_level}}</div>
         </div>
       </div>
     </div>

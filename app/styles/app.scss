@@ -16,10 +16,12 @@
 }
 
 .search-result-image-wrapper {
+  border-right: 1px solid #ddd;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
   text-align: center;
+  padding-right: 10px;
   width: 74px;
 }
 
@@ -32,7 +34,7 @@
 }
 
 .search-result-sub {
-  flex: 0 0 90px;
+  flex: 0 0 110px;
 }
 
 .distance {
@@ -60,6 +62,35 @@
   min-height: 120px;
   margin: 0 10px 20px;
   min-width: 120px;
+}
+
+
+// shares a bunch of styles with avatar-placeholder
+.no-image-thumbnail {
+  background: #ddd;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  height: 64px;
+  width: 64px;
+  align-items: center;
+  justify-content: center;
+
+  .message {
+    line-height: 1.1em;
+    display: inline-block;
+    margin-top: 5px;
+  }
+}
+
+// .avatar-placeholder
+.avatar-placeholder {
+  background: #ddd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 64px;
+  width: 64px;
 }
 
 
