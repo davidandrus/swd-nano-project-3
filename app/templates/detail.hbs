@@ -33,13 +33,13 @@
 <h2>Photos</h2>
 {{ log photos }}
 <div class="thumbnails">
-
   {{#each model.photos as |photo index| }}
     {{#link-to "detail.photos" index class="thumb-wrapper"}}
       <img src="{{photo.thumb}}" alt="" />
     {{/link-to}}
   {{/each}}
 </div>
+{{outlet}}
 <h2>Recent Reviews</h2>
 <div class="reviews">
   {{#each model.reviews as |review| }}
@@ -63,4 +63,3 @@
   {{/each}}
   <button class="btn btn-primary">Leave a Review</button>
 </div>
-{{outlet}}

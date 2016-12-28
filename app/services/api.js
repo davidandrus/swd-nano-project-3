@@ -66,6 +66,7 @@ export default Ember.Service.extend({
                 });
 
                 return {
+                  getUrl: photo.get('getUrl'),
                   thumb: thumbnailUrl,
                   attribution: photo.get('html_attributions'),
                 }
