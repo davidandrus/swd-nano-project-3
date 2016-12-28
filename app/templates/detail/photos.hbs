@@ -2,4 +2,7 @@
 <div class="overlay">
   <h1>Photo</h1>
   <img style="border: 1px solid red" src="{{model.photo.thumb}}" alt=""/>
+  {{thumbs-list
+    class="thumbnails"
+    thumbs=model.thumbs }}
 </div>
