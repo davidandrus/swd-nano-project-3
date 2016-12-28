@@ -18,10 +18,8 @@
 <!-- google static map location for address, link to website, phone number etc... -->
 <!-- https://developers.google.com/places/web-service/search -->
 <!-- https://developers.google.com/places/web-service/details -->
-<!-- https://developers.google.com/maps/documentation/javascript/reference#spherical -->
 <!-- can probably use radar search, and list views, start with list -->
-<!-- make sure to show attributions for results -->
-
+<!-- make sure to show attributions for photos -->
 
 <hr />
 {{#each model as |restaurant| }}
@@ -56,17 +54,7 @@
               )
             </small>
           </h4>
-          {{#if restaurant.rating}}
-            <div class="rating">
-              <span class="glyphicon glyphicon-star"></span>
-              <span class="glyphicon glyphicon-star"></span>
-              <span class="glyphicon glyphicon-star"></span>
-              <span class="glyphicon glyphicon-star"></span>
-              <span class="glyphicon glyphicon-star"></span>
-            </div>
-          {{else}}
-            Not rated
-          {{/if}}
+          {{rating-static rating=restaurant.rating}}
           <!-- make more semantic -->
           <div class="address">{{restaurant.vicinity}}</div>
           <!-- <div class="keywords">
@@ -87,8 +75,7 @@
           {{else}}
             Price level not available
           {{/if}}
-          <div class="text-right">2.1 mi</div>
-          <!-- https://developers.google.com/maps/documentation/javascript/reference#spherical -->
+          <div class="text-right">{{restaurant.distance}}</div>
         </div>
       </div>
     </div>

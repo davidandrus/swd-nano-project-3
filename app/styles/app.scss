@@ -108,3 +108,31 @@
     }
   }
 }
+
+// stars
+.stars {
+  display: flex;
+
+  .star {
+    position: relative;
+  }
+
+  .star-fg {
+    position: absolute;
+    z-index: 2;
+  }
+
+  .star-half .star-fg {
+    overflow: hidden;
+    width: .45em;
+  }
+
+  .star-empty .star-fg {
+    display: none;
+  }
+
+
+  .star-bg {
+    color: #ddd;
+  }
+}

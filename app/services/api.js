@@ -3,7 +3,7 @@ import injectScript from 'ember-inject-script';
 import ENV from 'swd-nano-project-3/config/environment';
 
 const { gmaps: API_KEY } = ENV.apiKeys;
-const scriptUrl = `//maps.googleapis.com/maps/api/js?key=${API_KEY}&libraries=places`;
+const scriptUrl = `//maps.googleapis.com/maps/api/js?key=${API_KEY}&libraries=places,geometry`;
 
 let serviceResolve;
 let serviceReject;
@@ -14,13 +14,10 @@ const serviceReady = new Ember.RSVP.Promise((resolve, reject) => {
 });
 
 const getCommonFields = (record) => ({
-  icon: record.get('icon'),
+  ...record.getProperties('icon', 'name', 'rating', 'price_level'),
   lat: record.get('geometry.location').lat(),
   lng: record.get('geometry.location').lng(),
-  name: record.get('name'),
   open: record.get('opening_hours.open_now'),
-  rating: record.get('rating'),
-  price_level: record.get('price_level'),
 });
 
 export default Ember.Service.extend({
@@ -48,9 +45,6 @@ export default Ember.Service.extend({
         const callback = (results, status) => {
           if (status === google.maps.places.PlacesServiceStatus.OK) {
             const record = new Ember.Object(results);
-
-            console.log('detail record', record);
-
 
             const updatedRecord = {
               ...getCommonFields(record),
@@ -107,16 +101,20 @@ export default Ember.Service.extend({
 
       const request =  {
         location: pyrmont,
-        radius: '500',
-        type: 'restaurant',
+        types: ['restaurant'],
         language: 'en',
+        // keyword: 'sushi',
+        // radius: 500, // only for when rankby prominence
+        rankBy: google.maps.places.RankBy.DISTANCE,
       };
+
 
       return new Ember.RSVP.Promise((resolve, reject) => {
         const callback = (results, status) => {
           if (status === google.maps.places.PlacesServiceStatus.OK) {
             const updatedResults = results.map(result => {
               const record = new Ember.Object(result);
+              const commonFields = getCommonFields(record);
               const photos = record.get('photos');
               const firstPhoto = photos ? photos[0] : undefined;
               const firstPhotoUrl = firstPhoto ?
@@ -126,12 +124,15 @@ export default Ember.Service.extend({
                 }) :
                 undefined;
 
+              const distance = google.maps.geometry.spherical.computeDistanceBetween(pyrmont, result.geometry.location);
+              const distanceInMi = 0.000621371 * distance;
+
+                // computeDistanceBetween(from:LatLng, to:LatLng, radius?:number)
+
               return {
-                ...getCommonFields(record),
-                place_id: record.get('place_id'),
-                vicinity: record.get('vicinity'),
-                place_id: record.get('place_id'),
-                types: record.get('types'),
+                ...commonFields,
+                ...record.getProperties('place_id', 'vicinity', 'types'),
+                distance: `${distanceInMi.toFixed(2)} miles away`,
                 photo: {
                   src: firstPhotoUrl,
                   attributions: firstPhoto ? firstPhoto.html_attributions : undefined,

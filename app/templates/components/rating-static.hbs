@@ -1,0 +1,17 @@
+{{#if stars.length}}
+  {{#each stars as |star| }}
+    <div class="star star-{{star}}">
+      <div class="star-fg">
+        <span class="glyphicon glyphicon-star"></span>
+      </div>
+      <div class="star-bg">
+        <span class="glyphicon glyphicon-star"></span>
+      </div>
+    </div>
+  {{/each}}
+  <small class="rating">({{rating}})</small>
+{{else}}
+  Not rated
+{{/if}}
+
+{{yield}}
