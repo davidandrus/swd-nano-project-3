@@ -18,16 +18,18 @@
       <span class="glyphicon glyphicon-map-marker"></span>
       <label id="location-label"  class="input-label">Location</label>
     </span>
-    {{input
-      id="location-input"
-      type="text"
-      class='form-control'
-      classNameBindings="model.usingCurrentLocation:using-current"
-      placeholder="City, State OR ZipCode"
-      value=model.location
+    {{place-autocomplete-field
+      value= model.location
+      disable=false
+      handlerController= this
+      inputClass='form-control place-autocomplete--input'
+      focusOutCallback='done'
+      placeChangedCallback='placeChanged'
+      types='(cities)'
+      restrictions= restrictionsObjectFromController
+      withGeoLocate= true
     }}
   </div>
-
   <button class="btn btn-primary btn-right">Search For Restaurants</button>
 </form>
 <!-- google static map location for address, link to website, phone number etc... -->

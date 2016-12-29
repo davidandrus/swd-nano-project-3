@@ -1,6 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
+  api: Ember.inject.service(),
   geolocation: Ember.inject.service(),
   queryParams: {
     keyword: {
@@ -32,10 +33,12 @@ export default Ember.Route.extend({
     }
   },
   model({ keyword, location }) {
-    return {
-      keyword,
-      location,
-      usingCurrentLocation: false,
-    };
+    return this.get('api').serviceReady.then(() => {
+      return Ember.RSVP.Promise.resolve({
+        keyword,
+        location,
+        usingCurrentLocation: false,
+      })
+    });
   }
 });

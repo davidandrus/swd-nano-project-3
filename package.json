@@ -36,6 +36,7 @@
     "ember-export-application-global": "^1.0.5",
     "ember-inject-script": "0.0.2",
     "ember-load-initializers": "^0.5.1",
+    "ember-place-autocomplete": "0.0.17",
     "ember-resolver": "^2.0.3",
     "ember-welcome-page": "^1.0.3",
     "loader.js": "^4.0.10"

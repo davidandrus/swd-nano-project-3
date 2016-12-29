@@ -32,6 +32,7 @@ export default Ember.Service.extend({
   },
 
   service: null,
+  serviceReady,
 
   getPlaceDetails(id) {
 
