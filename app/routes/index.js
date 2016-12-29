@@ -1,6 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
+  geolocation: Ember.inject.service(),
   queryParams: {
     keyword: {
       replace: true,
@@ -12,6 +13,14 @@ export default Ember.Route.extend({
     },
   },
   actions: {
+    useCurrentPosition() {
+      const that = this;
+      this.get('geolocation').getCurrentLocation().then(() => {
+        that.controller.set('model.location', 'Current Location');
+        that.controller.set('model.usingCurrentLocation', true);
+        console.timeEnd('geo');
+      });
+    },
     search() {
       const currentRouteName = this.controllerFor('application').get('currentRouteName');
       this.transitionTo(currentRouteName, {
@@ -26,6 +35,7 @@ export default Ember.Route.extend({
     return {
       keyword,
       location,
+      usingCurrentLocation: false,
     };
   }
 });

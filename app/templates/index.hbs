@@ -12,17 +12,17 @@
       value=model.keyword
     }}
   </div>
-
+  <button {{action "useCurrentPosition" }}>Use my current Location</button>
   <div class="input-group">
     <span class="input-group-addon">
       <span class="glyphicon glyphicon-map-marker"></span>
-
       <label id="location-label"  class="input-label">Location</label>
     </span>
     {{input
       id="location-input"
       type="text"
-      class="form-control"
+      class='form-control'
+      classNameBindings="model.usingCurrentLocation:using-current"
       placeholder="City, State OR ZipCode"
       value=model.location
     }}
