@@ -141,7 +141,10 @@ export default Ember.Service.extend({
               };
             });
 
-            setTimeout(() => resolve(updatedResults), 3000);
+            setTimeout(() => {
+              alert('should delay');
+              resolve(updatedResults);
+            }, 3000);
           } else {
             reject(status);
           }

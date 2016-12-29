@@ -10,6 +10,10 @@ Router.map(function() {
   this.route('detail', { path: 'detail/:id'}, function() {
     this.route('photos', { path: 'photos/:photo_index'});
   });
+
+  this.route('index', { path: '/' }, function() {
+    this.route('list');
+  });
 });
 
 export default Router;

@@ -1,7 +1,6 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
-  api: Ember.inject.service(),
   queryParams: {
     keyword: {
       replace: true,
@@ -14,7 +13,8 @@ export default Ember.Route.extend({
   },
   actions: {
     search() {
-      this.transitionTo('index', {
+      const currentRouteName = this.controllerFor('application').get('currentRouteName');
+      this.transitionTo(currentRouteName, {
         queryParams: {
           keyword: this.controller.get('model.keyword'),
           location: this.controller.get('model.location'),
@@ -22,26 +22,10 @@ export default Ember.Route.extend({
       });
     }
   },
-
-  // @TODO - form should probably be separate view, then can make
-  // results own view with separate model and loading state
-  setupController(controller, model, transition) {
-    controller.set('model', model);
-    controller.set('model.keyword', transition.queryParams.keyword);
-    controller.set('model.location', transition.queryParams.location);
-  },
-
-  beforeModel() {
-    console.log('beforeModel');
-  },
-
   model({ keyword, location }) {
-    console.log('model');
-    return this.get('api').makePlaceSearch({
-      keyword: keyword,
-      location: location,
-    }).then(results => ({
-      data: results
-    }))
+    return {
+      keyword,
+      location,
+    };
   }
 });
