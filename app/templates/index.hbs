@@ -1,4 +1,19 @@
 <form {{action "search" on="submit"}}>
+  <!-- <button {{action "useCurrentPosition" }}>Use my current Location</button> -->
+  <div class="input-group">
+    <span class="input-group-addon">
+      <span class="glyphicon glyphicon-map-marker"></span>
+      <label id="location-label"  class="input-label">Location</label>
+    </span>
+    {{place-autocomplete-field
+      value= model.place_name
+      disable=false
+      handlerController= this
+      inputClass='form-control place-autocomplete--input'
+      placeChangedCallback='placeChanged'
+      restrictions= restrictionsObjectFromController
+    }}
+  </div>
   <div class="input-group">
     <span class="input-group-addon">
       <span class="glyphicon glyphicon-filter"></span>
@@ -10,24 +25,6 @@
       class="form-control"
       placeholder="Chinese"
       value=model.keyword
-    }}
-  </div>
-  <button {{action "useCurrentPosition" }}>Use my current Location</button>
-  <div class="input-group">
-    <span class="input-group-addon">
-      <span class="glyphicon glyphicon-map-marker"></span>
-      <label id="location-label"  class="input-label">Location</label>
-    </span>
-    {{place-autocomplete-field
-      value= model.location
-      disable=false
-      handlerController= this
-      inputClass='form-control place-autocomplete--input'
-      focusOutCallback='done'
-      placeChangedCallback='placeChanged'
-      types='(cities)'
-      restrictions= restrictionsObjectFromController
-      withGeoLocate= true
     }}
   </div>
   <button class="btn btn-primary btn-right">Search For Restaurants</button>

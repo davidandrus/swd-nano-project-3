@@ -94,17 +94,23 @@ export default Ember.Service.extend({
     });
   },
 
-  makePlaceSearch({ keyword, location }) {
+  makePlaceSearch({ keyword, lat_lng }) {
+
+    if (!lat_lng) {
+      return Ember.RSVP.Promise.resolve([]);
+    }
+
 
     return serviceReady.then(() => {
+      const location = new google.maps.LatLng(...lat_lng.split(','));
 
-      var pyrmont = new google.maps.LatLng(-33.8665433,151.1956316);
+      console.log('making resquestion this time')
 
       const request =  {
-        location: pyrmont,
+        location: location,
         types: ['restaurant'],
         language: 'en',
-        // keyword: 'sushi',
+        keyword,
         // radius: 500, // only for when rankby prominence
         rankBy: google.maps.places.RankBy.DISTANCE,
       };
@@ -126,7 +132,7 @@ export default Ember.Service.extend({
                 }) :
                 undefined;
 
-              const distance = google.maps.geometry.spherical.computeDistanceBetween(pyrmont, result.geometry.location);
+              const distance = google.maps.geometry.spherical.computeDistanceBetween(location, result.geometry.location);
               const distanceInMi = 0.000621371 * distance;
 
               console.log(pagination.hasNextPage);
