@@ -93,8 +93,8 @@ export default Ember.Service.extend({
     });
   },
 
-  makePlaceSearch() {
-    console.log('make place search called');
+  makePlaceSearch({ keyword, location }) {
+
     return serviceReady.then(() => {
 
       var pyrmont = new google.maps.LatLng(-33.8665433,151.1956316);
@@ -110,8 +110,9 @@ export default Ember.Service.extend({
 
 
       return new Ember.RSVP.Promise((resolve, reject) => {
-        const callback = (results, status) => {
+        const callback = (results, status, pagination) => {
           if (status === google.maps.places.PlacesServiceStatus.OK) {
+            console.log('getting places results', results);
             const updatedResults = results.map(result => {
               const record = new Ember.Object(result);
               const commonFields = getCommonFields(record);
@@ -127,7 +128,7 @@ export default Ember.Service.extend({
               const distance = google.maps.geometry.spherical.computeDistanceBetween(pyrmont, result.geometry.location);
               const distanceInMi = 0.000621371 * distance;
 
-                // computeDistanceBetween(from:LatLng, to:LatLng, radius?:number)
+              console.log(pagination.hasNextPage);
 
               return {
                 ...commonFields,
@@ -140,7 +141,7 @@ export default Ember.Service.extend({
               };
             });
 
-            resolve(updatedResults);
+            setTimeout(() => resolve(updatedResults), 3000);
           } else {
             reject(status);
           }

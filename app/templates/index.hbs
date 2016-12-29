@@ -1,20 +1,35 @@
-<div class="input-group">
-  <span class="input-group-addon">
-    <span class="glyphicon glyphicon-filter"></span>
-    <label for="keyword-input" class="input-label">Keyword</label>
-  </span>
-  <input id="keyword-input" type="text" class="form-control" placeholder="Chinese">
-</div>
+<form {{action "search" on="submit"}}>
+  <div class="input-group">
+    <span class="input-group-addon">
+      <span class="glyphicon glyphicon-filter"></span>
+      <label for="keyword-input" class="input-label">Keyword</label>
+    </span>
+    {{input
+      id="keyword-input"
+      type="text"
+      class="form-control"
+      placeholder="Chinese"
+      value=model.keyword
+    }}
+  </div>
 
-<div class="input-group">
-  <span class="input-group-addon">
-    <span class="glyphicon glyphicon-map-marker"></span>
-    <label id="location-label"  class="input-label">Location</label>
-  </span>
-  <input id="location-input" type="text" class="form-control" placeholder="City, State OR ZipCode">
-</div>
+  <div class="input-group">
+    <span class="input-group-addon">
+      <span class="glyphicon glyphicon-map-marker"></span>
 
-<button class="btn btn-primary btn-right">Search For Restaurants</button>
+      <label id="location-label"  class="input-label">Location</label>
+    </span>
+    {{input
+      id="location-input"
+      type="text"
+      class="form-control"
+      placeholder="City, State OR ZipCode"
+      value=model.location
+    }}
+  </div>
+
+  <button class="btn btn-primary btn-right">Search For Restaurants</button>
+</form>
 <!-- google static map location for address, link to website, phone number etc... -->
 <!-- https://developers.google.com/places/web-service/search -->
 <!-- https://developers.google.com/places/web-service/details -->
@@ -22,7 +37,7 @@
 <!-- make sure to show attributions for photos -->
 
 <hr />
-{{#each model as |restaurant| }}
+{{#each model.data as |restaurant| }}
   <div class="media search-result">
     <div class="media-left">
        <div class="search-result-image-wrapper">
