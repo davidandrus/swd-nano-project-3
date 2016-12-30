@@ -1,6 +1,55 @@
 {{outlet}}
 
-{{#unless model.data.length}}
+{{#if model.data.length}}
+  <ol class="search-results">
+    {{#each model.data as |restaurant| }}
+      <li class="search-result">
+        <article class="search-result-wrapper">
+          <div class="search-result-body">
+            <div class="search-result-main">
+              <div class="search-result-main-top">
+                <div class="search-result-main-left">
+                  <h1 class="search-result-heading" >
+                    {{#link-to "detail" restaurant.place_id}}
+                      {{restaurant.name}}
+                    {{/link-to}}
+                    <small>(
+                      {{#if restaurant.open }}
+                        open
+                      {{else}}
+                        closed
+                      {{/if}}
+                      now
+                      )
+                    </small>
+                  </h1>
+                  {{rating-static rating=restaurant.rating}}
+                </div>
+                <div class="search-result-sub">
+                  <div class="search-result-sub-distance">{{restaurant.distance}} mi</div>
+                  <div class="search-result-price-level">{{price-level price=restaurant.price_level}}</div>
+                </div>
+              </div>
+              <address class="address">{{restaurant.vicinity}}</address>
+            </div>
+          </div>
+          <div class="search-result-image-wrapper">
+            {{#link-to "detail" restaurant.place_id}}
+              {{#if restaurant.photo.src}}
+                <img src="{{restaurant.photo.src}}" alt="">
+              {{else}}
+                <span class="no-image-thumbnail">
+                  <span class="glyphicon glyphicon-picture"></span>
+                  <small class="message">No images</small>
+                </span>
+              {{/if}}
+            {{/link-to}}
+          </div>
+        </article>
+      </li>
+    {{/each}}
+  </ol>
+{{else}}
   <h2 class="no-results-message">
     {{#if model.location}}
       No Results for location: '{{model.location}}'
@@ -11,53 +60,4 @@
       Enter a location above
     {{/if}}
   </h2>
-{{/unless}}
-{{#each model.data as |restaurant| }}
-  <div class="media search-result">
-    <div class="media-left">
-       <div class="search-result-image-wrapper">
-        {{#link-to "detail" restaurant.place_id}}
-          {{#if restaurant.photo.src}}
-            <img class="media-object" src="{{restaurant.photo.src}}">
-          {{else}}
-            <span class="no-image-thumbnail">
-              <span class="glyphicon glyphicon-picture"></span>
-              <small class="message">No images</small>
-            </span>
-          {{/if}}
-        {{/link-to}}
-      </div>
-    </div>
-    <div class="media-body search-result">
-      <div class="search-result-body">
-        <div class="search-result-main">
-          <div class="search-result-main-top">
-            <div class="search-result-main-left">
-              <h2 class="search-result-heading media-heading h5" >
-                {{#link-to "detail" restaurant.place_id}}
-                  {{restaurant.name}}
-                {{/link-to}}
-                <small>(
-                  {{#if restaurant.open }}
-                    open
-                  {{else}}
-                    closed
-                  {{/if}}
-                  now
-                  )
-                </small>
-              </h2>
-              {{rating-static rating=restaurant.rating}}
-            </div>
-            <div class="search-result-sub">
-              <div class="search-result-sub-distance">{{restaurant.distance}} mi</div>
-              <div class="search-result-price-level">{{price-level price=restaurant.price_level}}</div>
-            </div>
-          </div>
-          <div class="address">{{restaurant.vicinity}}</div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <hr />
-{{/each}}
+{{/if}}
