@@ -1,9 +1,6 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
-  init() {
-    this.notifyPropertyChange
-  },
   api: Ember.inject.service(),
   geolocation: Ember.inject.service(),
   queryParams: {
@@ -29,9 +26,6 @@ export default Ember.Route.extend({
     //     console.timeEnd('geo');
     //   });
     // },
-    notifyPropertyChange() {
-      console.log('property changed yo');
-    },
     placeChanged({
       geometry: {
         location
@@ -61,12 +55,12 @@ export default Ember.Route.extend({
       this.refresh();
     }
   },
-  setupController(controller, model) {
-    this._super(controller, model);
-    console.log(controller, model);
-    // put the custom setup here
-  },
+  // beforeModel() {
+  //   console.log('beforeModel');
+  //   //this.get('geolocation').getCurrentLocation().then(console.log);
+  // },
   model({ keyword, lat_lng, place_id, place_name }) {
+
     return this.get('api').serviceReady.then(() => {
       return Ember.RSVP.Promise.resolve({
         keyword,

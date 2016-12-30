@@ -12,7 +12,7 @@ Router.map(function() {
   });
 
   this.route('index', { path: '/' }, function() {
-    this.route('list');
+    this.route('list', { path: '/' });
   });
 });
 

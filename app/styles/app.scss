@@ -1,4 +1,13 @@
 @import "flatly/_variables";
+
+// darken some text colors so contrast ratio is better for accessibility
+$darker-light-gray: darken($gray-light, 30%);
+$text-muted: $darker-light-gray;
+$headings-small-color: $darker-light-gray;
+$blockquote-small-color: $darker-light-gray;
+$link-color: darken($link-color, 20%);
+$link-hover-color: darken($link-color, 10%);
+
 @import "bootstrap";
 @import "flatly/_bootswatch";
 
@@ -20,7 +29,6 @@
 .input-label {
   width: 5em;
 }
-
 
 .no-results-message {
   font-size: $font-size-h4;
@@ -52,14 +60,14 @@
 }
 
 .search-result-image-wrapper {
+  align-items: center;
   border-right: 1px solid $hr-border;
   display: flex;
-  order: 1;
-  align-items: center;
   justify-content: flex-end;
-  text-align: center;
   margin-right: 10px;
+  order: 1;
   padding-right: 10px;
+  text-align: center;
   width: 74px;
 }
 
@@ -71,6 +79,10 @@
 
 .search-result-main {
   flex: 1 1 auto;
+}
+
+.address {
+  margin:0;
 }
 
 .search-result-main-top {
@@ -88,7 +100,6 @@
   line-height: 1.3em;
   margin: 0 0 5px;;
 
-
   @include breakpoint() {
     font-size: $font-size-h4;
   }
@@ -99,8 +110,8 @@
 
 .search-result-sub {
   color: $text-muted;
-  font-size: $font-size-small;
   display: flex;
+  font-size: $font-size-small;
   justify-content: space-between;
   margin: 5px 0;
 
@@ -131,19 +142,19 @@
 }
 
 .thumb-wrapper {
+  align-items: center;
   border: 1px solid $hr-border;
   display: inline-flex;
-  align-items: center;
   justify-content: center;
-  min-height: 120px;
   margin: 0 10px 20px;
+  min-height: 120px;
   min-width: 120px;
 }
 
 
 // shares a bunch of styles with avatar-placeholder
 .no-image-thumbnail {
-  background: $gray-lighter;
+  background: lighten($gray-lighter, 5%);
   display: flex;
   flex-direction: column;
   padding: 10px;
@@ -153,31 +164,30 @@
   justify-content: center;
 
   .message {
-    line-height: 1.1em;
     display: inline-block;
+    line-height: 1.1em;
     margin-top: 5px;
   }
 }
 
 // .avatar-placeholder
 .avatar-placeholder {
+  align-items: center;
   background: #ddd;
   display: flex;
-  align-items: center;
-  justify-content: center;
   height: 64px;
+  justify-content: center;
   width: 64px;
 }
-
 
 // overlay
 .overlay {
   background-color: rgba(0, 0, 0, .9);
-  position: fixed;
-  top: 0;
-  left: 0;
   bottom: 0;
+  left: 0;
+  position: fixed;
   right: 0;
+  top: 0;
   z-index: 2000;
 }
 
@@ -186,16 +196,16 @@
   flex-direction: column;
 
   .thumbs-container {
-    flex: 0 0 120px;
     display: flex;
+    flex: 0 0 120px;
     justify-content: center;
   }
 
   .image-container {
+    align-items: center;
     display: flex;
     flex: 1 0 auto;
     justify-content: center;
-    align-items: center;
 
     .main-image {
       display: flex;
@@ -238,7 +248,6 @@
     display: none;
   }
 
-
   .star-bg {
     color: $gray-lighter;
   }
@@ -252,26 +261,30 @@
 // spinner
 .spinner {
   animation: spin 1.5s linear infinite;
-  position: relative;
-  width: 60px;
-  height: 60px;
-  margin: 30px auto 0;
   border: 2px solid $brand-primary;
   border-radius: 50%;
+  height: 60px;
+  margin: 30px auto 0;
+  position: relative;
+  width: 60px;
 
   &:after {
     content:"";
-    width: 85%;
     height: 85%;
     background: -webkit-linear-gradient(45deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 40%, rgba(255,255,255,0.7) 60%, rgba(255,255,255,0) 100%);
+    left: 0;
     position: absolute;
     top:0;
-    left: 0;
     transform: translate(-5%,-5%);
+    width: 85%;
   }
 }
 
 @keyframes spin {
   0%   { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+
+.pac-item {
+  color: $darker-light-gray;
 }

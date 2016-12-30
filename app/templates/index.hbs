@@ -1,11 +1,12 @@
 <form {{action "search" on="submit"}}>
   <!-- <button {{action "useCurrentPosition" }}>Use my current Location</button> -->
-  <div class="input-group">
+  <label class="input-group">
     <span class="input-group-addon">
       <span class="glyphicon glyphicon-map-marker"></span>
-      <label id="location-label"  class="input-label">Location</label>
+      <span class="input-label">Location</span>
     </span>
     {{place-autocomplete-field
+      id="location-label"
       value=model.place_name
       disable=false
       handlerController= this
@@ -13,11 +14,11 @@
       placeChangedCallback='placeChanged'
       restrictions= restrictionsObjectFromController
     }}
-  </div>
-  <div class="input-group">
+  </label>
+  <label class="input-group">
     <span class="input-group-addon">
       <span class="glyphicon glyphicon-filter"></span>
-      <label for="keyword-input" class="input-label">Keyword</label>
+      Keyword
     </span>
     {{input
       id="keyword-input"
@@ -26,7 +27,7 @@
       placeholder="Type of cuisine etc..."
       value=model.keyword
     }}
-  </div>
+  </label>
   <button class="btn btn-primary btn-right">Search For Restaurants</button>
 </form>
 <!-- google static map location for address, link to website, phone number etc... -->
