@@ -140,7 +140,7 @@ export default Ember.Service.extend({
               return {
                 ...commonFields,
                 ...record.getProperties('place_id', 'vicinity', 'types'),
-                distance: `${distanceInMi.toFixed(2)} miles away`,
+                distance: `${distanceInMi.toFixed(1)}`,
                 photo: {
                   src: firstPhotoUrl,
                   attributions: firstPhoto ? firstPhoto.html_attributions : undefined,

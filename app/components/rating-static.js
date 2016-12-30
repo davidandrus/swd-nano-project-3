@@ -19,6 +19,7 @@ function getStarsArrFromRating(rating) {
 
 export default Ember.Component.extend({
   classNames: ['stars'],
+  classNameBindings: ['rating::no-rating'],
 
   didReceiveAttrs() {
     this._super(...arguments);

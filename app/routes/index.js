@@ -1,6 +1,9 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
+  init() {
+    this.notifyPropertyChange
+  },
   api: Ember.inject.service(),
   geolocation: Ember.inject.service(),
   queryParams: {
@@ -26,6 +29,9 @@ export default Ember.Route.extend({
     //     console.timeEnd('geo');
     //   });
     // },
+    notifyPropertyChange() {
+      console.log('property changed yo');
+    },
     placeChanged({
       geometry: {
         location
@@ -39,16 +45,26 @@ export default Ember.Route.extend({
     },
     search() {
       const currentRouteName = this.controllerFor('application').get('currentRouteName');
+      const keyword = this.controller.get('model.keyword');
+      const lat_lng = this.controller.get('model.lat_lng');
+      const place_id = this.controller.get('model.place_id');
+      const place_name = this.controller.get('model.place_name');
+
       this.transitionTo(currentRouteName, {
         queryParams: {
-          keyword: this.controller.get('model.keyword'),
-          lat_lng: this.controller.get('model.lat_lng'),
-          place_id: this.controller.get('model.place_id'),
-          place_name: this.controller.get('model.place_name'),
+          ...keyword && { keyword },
+          ...lat_lng && { lat_lng },
+          ...place_id && { place_id },
+          ...place_name && { place_name },
         },
       });
       this.refresh();
     }
+  },
+  setupController(controller, model) {
+    this._super(controller, model);
+    console.log(controller, model);
+    // put the custom setup here
   },
   model({ keyword, lat_lng, place_id, place_name }) {
     return this.get('api').serviceReady.then(() => {

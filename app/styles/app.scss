@@ -15,12 +15,19 @@
   width: 5em;
 }
 
-.using-current {
-  color: blue;
+
+.no-results-message {
+  font-size: $font-size-h4;
+  line-height: 1.4em;
+  margin: 30px;
+  text-align: center;
+}
+
+.search-result {
 }
 
 .search-result-image-wrapper {
-  border-right: 1px solid #ddd;
+  border-right: 1px solid $hr-border;
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -31,14 +38,45 @@
 
 .search-result-body {
   display: flex;
+  max-width: 100%;
 }
 
 .search-result-main {
-  flex: 1 0 auto;
+  flex: 1 1 auto;
+}
+
+.search-result-main-top {
+  @media screen and (min-width: $screen-sm-min) {
+    display: flex;
+  }
+}
+
+.search-result-main-left {
+  flex: 1 1 auto;
+}
+
+.search-result-heading {
+  line-height: 1.4em;
 }
 
 .search-result-sub {
-  flex: 0 0 110px;
+}
+
+.search-result-sub {
+  color: $text-muted;
+  font-size: $font-size-small;
+  display: flex;
+  justify-content: space-between;
+  margin: 5px 0;
+
+  @media screen and (min-width: $screen-sm-min) {
+    display: block;
+    flex: 0 0 60px;
+    text-align: right;
+  }
+}
+
+.search-result-price-level {
 }
 
 .distance {
@@ -47,7 +85,7 @@
 
 // details
 .restaurant-location {
-  background: gray;
+  background: $gray-lighter;
   height: 300px;
   width: 400px;
 }
@@ -58,8 +96,7 @@
 }
 
 .thumb-wrapper {
-  background-color: rgba(255, 255, 255, .1);
-  box-shadow: 1px 1px 5px rgba(0, 0, 0, .1);
+  border: 1px solid $hr-border;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -71,7 +108,7 @@
 
 // shares a bunch of styles with avatar-placeholder
 .no-image-thumbnail {
-  background: #ddd;
+  background: $gray-lighter;
   display: flex;
   flex-direction: column;
   padding: 10px;
@@ -168,6 +205,38 @@
 
 
   .star-bg {
-    color: #ddd;
+    color: $gray-lighter;
   }
+
+  &.no-rating {
+    color: $text-muted;
+    font-size: $font-size-small;
+  }
+}
+
+// spinner
+.spinner {
+  animation: spin 1.5s linear infinite;
+  position: relative;
+  width: 60px;
+  height: 60px;
+  margin: 30px auto 0;
+  border: 2px solid $brand-primary;
+  border-radius: 50%;
+
+  &:after {
+    content:"";
+    width: 85%;
+    height: 85%;
+    background: -webkit-linear-gradient(45deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 40%, rgba(255,255,255,0.7) 60%, rgba(255,255,255,0) 100%);
+    position: absolute;
+    top:0;
+    left: 0;
+    transform: translate(-5%,-5%);
+  }
+}
+
+@keyframes spin {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
