@@ -1,34 +1,46 @@
-<form {{action "search" on="submit"}}>
+<form class="search-form" {{action "search" on="submit"}}>
   <!-- <button {{action "useCurrentPosition" }}>Use my current Location</button> -->
-  <label class="input-group">
-    <span class="input-group-addon">
-      <span class="glyphicon glyphicon-map-marker"></span>
-      <span class="input-label">Location</span>
+  <div class="input-group input-group-sm location-input-wrapper">
+    <label>
+      <span class="input-group-addon">
+        <span class="input-label">Location*</span>
+      </span>
+      {{place-autocomplete-field
+        id="location-input"
+        value=model.place_name
+        disable=false
+        handlerController= this
+        inputClass='form-control place-autocomplete--input'
+        placeChangedCallback='placeChanged'
+        restrictions= restrictionsObjectFromController
+      }}
+    </label>
+    <span class="input-group-btn">
+      <button class="btn btn-primary" type="button" {{action 'useCurrentPosition'}}>
+        {{#if model.gettingCurrentLocation}}
+          <span class="glyphicon glyphicon-refresh"></span>
+        {{else}}
+          <span class="glyphicon glyphicon-globe"></span>
+        {{/if}}
+        <span class="sr-only">Current Location</span>
+      </button>
     </span>
-    {{place-autocomplete-field
-      id="location-label"
-      value=model.place_name
-      disable=false
-      handlerController= this
-      inputClass='form-control place-autocomplete--input'
-      placeChangedCallback='placeChanged'
-      restrictions= restrictionsObjectFromController
-    }}
-  </label>
-  <label class="input-group">
+  </div>
+  <label class="input-group input-group-sm">
     <span class="input-group-addon">
-      <span class="glyphicon glyphicon-filter"></span>
-      Keyword
+      <span class="input-label">Keyword</span>
     </span>
     {{input
       id="keyword-input"
       type="text"
       class="form-control"
-      placeholder="Type of cuisine etc..."
+      placeholder="Type of cuisine, name of restaurant etc..."
       value=model.keyword
     }}
   </label>
-  <button class="btn btn-primary btn-right">Search For Restaurants</button>
+  <button class="btn btn-primary btn-right btn-sm" disabled={{model.isDisabled}}>
+    Search For Restaurants
+  </button>
 </form>
 <!-- google static map location for address, link to website, phone number etc... -->
 <!-- https://developers.google.com/places/web-service/search -->

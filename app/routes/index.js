@@ -18,14 +18,15 @@ export default Ember.Route.extend({
     }
   },
   actions: {
-    // useCurrentPosition() {
-    //   const that = this;
-    //   this.get('geolocation').getCurrentLocation().then(() => {
-    //     that.controller.set('model.location', 'Current Location');
-    //     that.controller.set('model.usingCurrentLocation', true);
-    //     console.timeEnd('geo');
-    //   });
-    // },
+    useCurrentPosition() {
+      const that = this;
+      this.controller.set('model.gettingCurrentLocation', true);
+      this.get('geolocation').getCurrentLocation().then(() => {
+        that.controller.set('model.place_name', 'Current Location');
+        that.controller.set('model.usingCurrentLocation', true);
+        this.controller.set('model.gettingCurrentLocation', false);
+      });
+    },
     placeChanged({
       geometry: {
         location
@@ -55,19 +56,20 @@ export default Ember.Route.extend({
       this.refresh();
     }
   },
-  // beforeModel() {
-  //   console.log('beforeModel');
-  //   //this.get('geolocation').getCurrentLocation().then(console.log);
-  // },
-  model({ keyword, lat_lng, place_id, place_name }) {
+  setupController(controller, model) {
+    controller.set('model', model);
+    controller.set('model.isDisabled', false);
+  },
+  beforeModel() {
+    return this.get('api').serviceReady;
 
-    return this.get('api').serviceReady.then(() => {
-      return Ember.RSVP.Promise.resolve({
-        keyword,
-        lat_lng,
-        place_id,
-        place_name,
-      })
-    });
-  }
+  },
+  model({ keyword, lat_lng, place_id, place_name }) {
+    return {
+      keyword,
+      lat_lng,
+      place_id,
+      place_name,
+    };
+  },
 });

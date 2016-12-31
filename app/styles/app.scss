@@ -19,15 +19,53 @@ $link-hover-color: darken($link-color, 10%);
 
 .input-group {
   margin-bottom: 20px;
+
+  input {
+    font-size: 13px;
+    height: 35px;
+  }
+}
+
+// funky stuff to make work with ember googleplaces addon
+.search-form {
+  .location-input-wrapper {
+
+    label {
+      display: flex;
+      width: 100%;
+
+      .input-group-addon {
+        font-size: 13px;
+      }
+
+      #location-input {
+        flex: 1 0 auto;
+
+        input {
+          padding-left: 9px;
+        }
+      }
+    }
+    //
+    .input-group-btn {
+      vertical-align: top;
+    }
+  }
+
+  .input-group-sm .input-group-addon {
+    padding-left: 9px;
+    text-align: left;
+    min-width: 6em;
+  }
+
+  .input-group-btn .glyphicon-refresh {
+    animation: spin 1.5s linear infinite;
+  }
 }
 
 .app-container {
   margin-top: 60px;
   padding: 20px;
-}
-
-.input-label {
-  width: 5em;
 }
 
 .no-results-message {
